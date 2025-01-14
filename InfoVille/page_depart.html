@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>TP de synthese Vue js</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div id="app" >
+	<!-- Page Villes -->
+	<div id="pageVilles" v-if="affichVilles">
+		<div class="container-fluid mt-3">
+			<div class="row">
+				<div class="col-10 bg-primary text-white">
+					<br><h1>VILLES SELECTIONNEES</h1>
+				</div>
+				<div class="col-2 bg-primary">
+					<img @click="changePage()" src="./images/roueparam.png" width="100" height="100" />
+					<br>
+				</div>
+			</div>
+		</div>
+		<br><br>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-3" v-for="(currentCP, i) in listeCodePostal" :key="currentCP.cp">
+					<div class="col-11 border border-primary rounded">
+						<div class="row">
+							<div class="col-8 bg-primary text-white">
+								<br><h2>{{ currentCP.placename }}</h2>
+							</div>
+							<div class="col-4 bg-primary">
+								<img src="./images/ville.png" width="90" height="90" />
+								<br>
+							</div>
+						</div>
+						<!-- Afficher les informations spécifiques à ce code postal -->
+						<div class="row">
+							<div class="col-12 bg-info">
+								<br>
+								<h6>Code Postal : {{ currentCP.cp }}</h6>
+								<h6>Région : {{ currentCP.region }}</h6>
+								<h6>Latitude : {{ currentCP.latitude }}</h6>
+								<h6>Longitude : {{ currentCP.longitude }}</h6>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Page Paramétrage -->
+	<div id="pageParametrage" v-if="!affichVilles">
+		<div class="container-fluid mt-3">
+			<div class="row">
+				<div class="col-10 bg-primary text-white">
+					<br><h1>PARAMETRAGE</h1>
+				</div>
+				<div class="col-2 bg-primary">
+					<img @click="changePage()" src = "./images/retour.jpg" width="90" height="90" /><br>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+					<div class="container mt-3">
+					  <h1>Nouveau CP</h1>
+					  <p>Saisir un CP et valider</p>
+						<div class="form-floating mb-3 mt-3">
+						  <input type="text" class="form-control" id="cp" placeholder="Saisir un CP" name="cp" v-model="cp">
+						  <label for="cp">CP</label>
+						</div>
+						<button type="submit" class="btn btn-primary" @click="cherche()">Valider</button>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="container mt-3">
+						<h1>Ville selectionnee</h1>
+						<div class="container-fluid mt-3">
+							<div class="listeCP" v-for="(currentCP, i) in listeCodePostal" >
+								<div class="row">
+									<div class="col-9">
+										<button type="button" class="col-12 btn btn-primary">{{ i + 1 }}: {{ currentCP.cp }}</button>
+									</div>
+									<div class="col-3">
+										<img src="./images/poubelleverte.png" width="30" height="30" @click="suprimer(i)"/>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12">
+								</div>
+							</div>	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js" ></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="./viewModelVille_depart.js"></script>
+
+</body>
+</html>
